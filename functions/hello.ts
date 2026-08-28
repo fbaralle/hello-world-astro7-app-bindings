@@ -3,18 +3,18 @@
  *
  * Smoke test for the Cloud Functions pipeline: build -> deploy -> reachable.
  *
- * Written as a raw FetchableFunction rather than via declareFunction() so the
- * fixture needs no dependency installed. That matters for the static app (which
- * has no package.json at all) and keeps all three fixtures identical, so a
- * failure points at the pipeline rather than at one app's node_modules.
+ * Authored with declareFunction(): the handler returns plain JSON data and the
+ * wrapper builds the Response. `method` defaults to GET on the Cloud surface,
+ * so simple read endpoints declare no config at all.
+ *
+ * Exporting a raw `{ config, fetch }` object is also supported (see the
+ * static-app fixture, which has no package.json and therefore no dependency to
+ * import) but gives up the typed context.
  */
-export default {
-  config: { method: "GET" },
-  async fetch() {
-    return Response.json({
-      message: "hello from webflow cloud functions",
-      app: "astro7",
-      route: "/api/hello",
-    });
-  },
-};
+import { declareFunction } from "@webflow/functions/cloud";
+
+export default declareFunction(async () => ({
+  message: "hello from webflow cloud functions",
+  app: "astro7",
+  route: "/api/hello",
+}));

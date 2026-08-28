@@ -1,7 +1,8 @@
 /** GET /<mount>/api/status/health — proves a folder becomes a path segment. */
-export default {
-  config: { method: "GET" },
-  async fetch() {
-    return Response.json({ message: "ok", app: "astro7", route: "/api/status/health" });
-  },
-};
+import { declareFunction } from "@webflow/functions/cloud";
+
+export default declareFunction(async () => ({
+  message: "ok",
+  app: "astro7",
+  route: "/api/status/health",
+}));

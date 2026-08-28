@@ -19,6 +19,7 @@
     "postinstall": "wrangler types"
   },
   "dependencies": {
+    "@webflow/functions": "2.2.0-cloud-fn-test.1",
     "@astrojs/cloudflare": "^14.1.0",
     "astro": "^7.0.5"
   },

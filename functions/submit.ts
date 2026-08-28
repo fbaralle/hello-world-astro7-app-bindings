@@ -5,15 +5,14 @@
  * Also reports whether env reached the handler. Reports presence only, never a
  * value: these responses are public.
  */
-export default {
-  config: { method: "POST" },
-  async fetch(request, context) {
-    const env = context?.env ?? {};
-    return Response.json({
-      message: "submitted",
-      app: "astro7",
-      route: "/api/submit",
-      envKeyCount: Object.keys(env).length,
-    });
-  },
-};
+import { declareFunction } from "@webflow/functions/cloud";
+
+export default declareFunction(
+  async (ctx) => ({
+    message: "submitted",
+    app: "astro7",
+    route: "/api/submit",
+    envKeyCount: Object.keys(ctx.env).length,
+  }),
+  { method: "POST" }
+);
