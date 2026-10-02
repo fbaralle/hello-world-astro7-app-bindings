@@ -1,0 +1,34 @@
+---
+// CLOUD-714 image-service test page.
+//
+// Renders Astro's <Image> through the Webflow Cloud image loader so we can
+// verify the on-demand Cloudflare resizing URLs. After the fix the URLs should
+// carry `format=auto` (so Cloudflare serves WebP/AVIF) and the responsive image
+// should emit a `srcset`. Before the fix the URL has no `format=auto` and there
+// is no `srcset`.
+import { Image } from 'astro:assets';
+import hero from '../assets/hero.jpg';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CLOUD-714 image test</title>
+  </head>
+  <body>
+    <h1>CLOUD-714 Astro image loader test</h1>
+
+    <section>
+      <h2>1. Single resize</h2>
+      <p>Expect the <code>src</code> to be a <code>/cdn-cgi/image/width=800,...,format=auto/</code> URL.</p>
+      <Image src={hero} width={800} alt="Single resized hero" />
+    </section>
+
+    <section>
+      <h2>2. Responsive widths</h2>
+      <p>Expect a <code>srcset</code> with 400w / 800w / 1200w entries, each a <code>/cdn-cgi/image/...,format=auto/</code> URL.</p>
+      <Image src={hero} widths={[400, 800, 1200]} sizes="100vw" alt="Responsive hero" />
+    </section>
+  </body>
+</html>
