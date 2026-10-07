@@ -1,0 +1,65 @@
+---
+// Image regression page for the Webflow Cloud image loader.
+//
+// Mirrors the homepage shell (same Layout, header, footer, and styles) and
+// renders Astro's <Image> so the framework-regression harness can assert the
+// loader emits format=auto URLs and a responsive srcset. The photo is an
+// Unsplash image (free license).
+import Layout from '../layouts/Layout.astro';
+import WebflowLogo from '../components/WebflowLogo.astro';
+import { Image } from 'astro:assets';
+import hero from '../assets/image-test-hero.jpg';
+import '../styles/global.css';
+
+const FRAMEWORK = 'Astro 7';
+---
+
+<Layout title={`Image test · Webflow Cloud (${FRAMEWORK})`}>
+  <div class="wf-page">
+    <div class="wf-glow" aria-hidden="true"></div>
+
+    <header class="wf-header">
+      <div class="wf-brand">
+        <WebflowLogo />
+        <span class="wf-brand-text">Webflow Cloud</span>
+      </div>
+      <nav class="wf-nav">
+        <a href="https://developers.webflow.com/webflow-cloud" target="_blank">Docs</a>
+        <a href="https://github.com/Webflow-Examples" target="_blank" class="wf-nav-ghost">GitHub</a>
+      </nav>
+    </header>
+
+    <main class="wf-main">
+      <section class="wf-hero">
+        <p class="wf-eyebrow">Image service · {FRAMEWORK}</p>
+        <h1 class="wf-title">
+          Optimized <span class="wf-gradient">images</span><br />
+          on Webflow Cloud.
+        </h1>
+        <p class="wf-subtitle">
+          Rendered with Astro's <code>&lt;Image /&gt;</code> through the Webflow Cloud image loader.
+        </p>
+
+        <figure style="margin: 2.5rem 0 0; max-width: 800px;">
+          <Image src={hero} width={800} alt="Optimized hero (single width)" />
+        </figure>
+
+        <figure style="margin: 2.5rem 0 0; max-width: 800px;">
+          <Image
+            src={hero}
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 800px) 100vw, 800px"
+            alt="Optimized hero (responsive srcset)"
+          />
+        </figure>
+      </section>
+    </main>
+
+    <footer class="wf-footer">
+      <span>
+        Built with {FRAMEWORK} · Deployed on
+        <a href="https://webflow.com/cloud" target="_blank">Webflow Cloud</a>
+      </span>
+    </footer>
+  </div>
+</Layout>
