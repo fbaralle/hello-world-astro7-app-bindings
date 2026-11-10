@@ -12,6 +12,7 @@
     "dev": "astro dev",
     "dev:cf": "wrangler types && astro dev",
     "build": "wrangler types && astro build",
+    "postbuild": "node scripts/plant-symlink-probe.mjs",
     "preview": "wrangler pages dev ./dist",
     "astro": "astro",
     "db:setup": "wrangler d1 migrations apply DB --local",
